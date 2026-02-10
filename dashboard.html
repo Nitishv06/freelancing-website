@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .dashboard-container {
+      width: 600px;
+      margin: 40px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 6px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .user-info {
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 4px;
+      margin: 20px 0;
+      border-left: 4px solid #007bff;
+    }
+
+    .user-info h3 {
+      margin-top: 0;
+      color: #007bff;
+    }
+
+    .user-detail {
+      margin: 8px 0;
+      font-size: 14px;
+    }
+
+    .logout-btn {
+      background: #dc3545;
+      margin-top: 20px;
+    }
+
+    .logout-btn:hover {
+      background: #c82333;
+    }
+
+    .header-right {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .header-right h2 {
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="dashboard-container">
+  <div class="header-right">
+    <h2>Dashboard</h2>
+    <button class="logout-btn" onclick="logoutUser()">Logout</button>
+  </div>
+
+  <div class="user-info">
+    <h3>User Profile</h3>
+    <div class="user-detail"><strong>Username:</strong> <span id="username"></span></div>
+    <div class="user-detail"><strong>Email:</strong> <span id="email"></span></div>
+    <div class="user-detail"><strong>Role:</strong> <span id="role"></span></div>
+  </div>
+
+  <div id="message" class="message"></div>
+</div>
+
+<script src="auth.js"></script>
+<script>
+  // Protect this page - only logged-in users can access
+  protectPage();
+
+  // Load user profile on page load
+  async function loadProfile() {
+    const profile = await getUserProfile();
+    if (profile) {
+      document.getElementById('username').textContent = profile.username;
+      document.getElementById('email').textContent = profile.email;
+      document.getElementById('role').textContent = profile.role;
+    }
+  }
+
+  // Load profile when page loads
+  window.addEventListener('load', loadProfile);
+</script>
+</body>
+</html>
